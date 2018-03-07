@@ -76,7 +76,7 @@ function NetworkingController (models, $state, $scope, strings) {
         }
     });
 
-    $('#networking-search').on('select2:select', (e) => {
+    $('#networking-search').on('select2:select', () => {
         $scope.$broadcast('awxNet-search', $scope.device);
     });
 
