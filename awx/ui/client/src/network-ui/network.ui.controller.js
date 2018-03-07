@@ -6,6 +6,7 @@ var hotkeys = require('./hotkeys.fsm.js');
 var toolbox_fsm = require('./toolbox.fsm.js');
 var view = require('./view.fsm.js');
 var move = require('./move.fsm.js');
+var buttons = require('./buttons.fsm.js');
 var time = require('./time.fsm.js');
 var test_fsm = require('./test.fsm.js');
 var util = require('./util.js');
@@ -220,6 +221,7 @@ var NetworkUIController = function($scope,
   $scope.view_controller = new fsm.FSMController($scope, "view_fsm", view.Start, $scope);
   $scope.move_controller = new fsm.FSMController($scope, "move_fsm", move.Start, $scope);
   $scope.details_panel_controller = new fsm.FSMController($scope, "details_panel_fsm", details_panel_fsm.Start, $scope);
+  $scope.buttons_controller = new fsm.FSMController($scope, "buttons_fsm", buttons.Start, $scope);
   $scope.time_controller = new fsm.FSMController($scope, "time_fsm", time.Start, $scope);
   $scope.test_controller = new fsm.FSMController($scope, "test_fsm", test_fsm.Start, $scope);
 
@@ -312,8 +314,11 @@ var NetworkUIController = function($scope,
   $scope.inventory_toolbox_controller.delegate_channel = new fsm.Channel($scope.inventory_toolbox_controller,
                                                             $scope.details_panel_controller,
                                                             $scope);
-  $scope.time_controller.delegate_channel = new fsm.Channel($scope.time_controller,
+  $scope.buttons_controller.delegate_channel = new fsm.Channel($scope.buttons_controller,
                                                             $scope.inventory_toolbox_controller,
+                                                            $scope);
+  $scope.time_controller.delegate_channel = new fsm.Channel($scope.time_controller,
+                                                            $scope.buttons_controller,
                                                             $scope);
   $scope.mode_controller.delegate_channel = new fsm.Channel($scope.mode_controller,
                                                             $scope.time_controller,
@@ -600,7 +605,7 @@ var NetworkUIController = function($scope,
         $scope.first_channel.send('DetailsPanelClose', {});
     };
 
-    $scope.$on('hostUpdateSaved', (e, host) => {
+    $scope.$on('awxNet-hostUpdateSaved', (e, host) => {
         if (host.variables !== "" && $scope.selected_devices.length === 1) {
             host.data = jsyaml.safeLoad(host.variables);
             $scope.selected_devices[0].type = host.data.type;
@@ -612,7 +617,7 @@ var NetworkUIController = function($scope,
             $scope.first_channel.send('DetailsPanel', {});
             $scope.removeContextMenu();
             $scope.update_toolbox_heights();
-            $scope.$emit('showDetails', item, canAdd);
+            $scope.$emit('awxNet-showDetails', item, canAdd);
         }
 
         // show details for devices
@@ -694,7 +699,7 @@ var NetworkUIController = function($scope,
             index = $scope.devices.indexOf(devices[i]);
             if (index !== -1) {
                 $scope.devices.splice(index, 1);
-                $scope.$emit('removeSearchOption', devices[i]);
+                $scope.$emit('awxNet-removeSearchOption', devices[i]);
                 $scope.send_control_message(new messages.DeviceDestroy($scope.client_id,
                                                                        devices[i].id,
                                                                        devices[i].x,
@@ -728,7 +733,7 @@ var NetworkUIController = function($scope,
         $scope.action_icons[0].fsm.handle_message("Disable", {});
         $scope.action_icons[1].fsm.handle_message("Enable", {});
         $scope.overall_toolbox_collapsed = !$scope.overall_toolbox_collapsed;
-        $scope.$emit('overall_toolbox_collapsed');
+        $scope.$emit('awxNet-overall_toolbox_collapsed');
     };
 
     $scope.onToggleToolboxButtonRight = function () {
@@ -736,22 +741,22 @@ var NetworkUIController = function($scope,
         $scope.action_icons[0].fsm.handle_message("Enable", {});
         $scope.action_icons[1].fsm.handle_message("Disable", {});
         $scope.overall_toolbox_collapsed = !$scope.overall_toolbox_collapsed;
-        $scope.$emit('overall_toolbox_collapsed');
+        $scope.$emit('awxNet-overall_toolbox_collapsed');
     };
 
-    $scope.$on('toolbarButtonEvent', function(e, functionName){
+    $scope.$on('awxNet-toolbarButtonEvent', function(e, functionName){
         $scope[`on${functionName}Button`]();
     });
 
-    $scope.$on('SearchDropdown', function(){
+    $scope.$on('awxNet-SearchDropdown', function(){
         $scope.first_channel.send('SearchDropdown', {});
     });
 
-    $scope.$on('SearchDropdownClose', function(){
+    $scope.$on('awxNet-SearchDropdownClose', function(){
         $scope.first_channel.send('SearchDropdownClose', {});
     });
 
-    $scope.$on('search', function(e, device){
+    $scope.$on('awxNet-search', function(e, device){
 
         var searched;
         for(var i = 0; i < $scope.devices.length; i++){
@@ -802,7 +807,7 @@ var NetworkUIController = function($scope,
         $scope.animations.push(pan_animation);
     };
 
-    $scope.$on('jumpTo', function(e, zoomLevel) {
+    $scope.$on('awxNet-jumpTo', function(e, zoomLevel) {
         var v_center = $scope.to_virtual_coordinates($scope.graph.width/2, $scope.graph.height/2);
         switch (zoomLevel){
             case 'site':
@@ -820,7 +825,7 @@ var NetworkUIController = function($scope,
         }
     });
 
-    $scope.$on('zoom', (e, zoomPercent) => {
+    $scope.$on('awxNet-zoom', (e, zoomPercent) => {
         let v_center = $scope.to_virtual_coordinates($scope.graph.width/2, $scope.graph.height/2);
         let scale = Math.pow(10, (zoomPercent - 120) / 40);
         $scope.jump_to_animation(v_center.x, v_center.y, scale, false);
@@ -1319,7 +1324,7 @@ var NetworkUIController = function($scope,
         }
 
         $scope.updateInterfaceDots();
-        $scope.$emit('instatiateSelect', $scope.devices);
+        $scope.$emit('awxNet-instatiateSelect', $scope.devices);
         $scope.update_device_variables();
     };
 
