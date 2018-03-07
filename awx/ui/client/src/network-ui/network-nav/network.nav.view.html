@@ -117,17 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="Networking-toolbar Networking-breadCrumbBar">
-            <ol class="Networking-breadCrumbBarItem">
-                <li class="BreadCrumb-item Networking-breadCrumbText" ng-repeat="group in vm.breadcrumb_groups | limitTo:(vm.breadcrumb_groups.length-1)">
-                    <span>{{group.name}}</span>
-                </li>
-                <li class="BreadCrumb-item Networking-breadCrumbText" ng-repeat="group in vm.breadcrumb_groups | limitTo:-1" class="active">
-                    <span>{{group.name}}</span>
-                </li>
-            </ol>
-        </div>
-
+        
     </div>
 </div>
 <div class="Networking-detailPanel" ng-show="vm.rightPanelIsExpanded">

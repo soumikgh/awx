@@ -44,10 +44,6 @@ function NetworkingController (models, $state, $scope, strings) {
         vm.leftPanelIsExpanded = !vm.leftPanelIsExpanded;
     });
 
-    $scope.$on('awxNet-breadcrumbGroups', (e, groups) => {
-        vm.breadcrumb_groups = _.sortBy(groups, 'distance').reverse();
-    });
-
     $scope.$on('awxNet-instatiateSelect', (e, devices) => {
         for(var i = 0; i < devices.length; i++){
             let device = devices[i];
