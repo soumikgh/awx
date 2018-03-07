@@ -90,7 +90,7 @@
 .Networking-toolbar{
     min-height: 40px;
     width:100%;
-    background-color: #ebebeb;
+    background-color: @ebgrey;
     display:flex;
     flex: 1 0 auto;
     align-items: center;
@@ -116,21 +116,21 @@
 
 .Networking-breadCrumbSlash{
     padding: 0px 10px 0px 10px;
-    color: #707070;
+    color: @default-stdout-txt;
 }
 
 .Networking-breadCrumbText--last{
-    color: #707070;
+    color: @default-stdout-txt;
     text-transform: none;
 }
 
 .Networking-toolbarButton{
     margin: 4px 20px 5px 0px;
     text-transform: uppercase;
-    background-color: #FFFFFF;
+    background-color: @default-bg;
     border-radius: 5px;
-    color: #707070;
-    border: 1px solid #B7B7B7;
+    color: @default-stdout-txt;
+    border: 1px solid @btn-bord;
     cursor: pointer;
     min-width: 70px;
     min-height: 30px;
@@ -138,7 +138,7 @@
 }
 
 .Networking-toolbarButton:hover {
-    background-color: #f2f2f2;
+    background-color: @btn-bg-hov;
 }
 
 .Networking-toolbarLeftSide{
@@ -172,13 +172,13 @@
 }
 
 .Networking-searchButton i{
-    color:#848992
+    color:@default-icon;
 }
 
 .Networking-jumpToDropDownPanel{
     width: 150px;
     padding: 10px 0px 10px 0px;
-    border: 1px solid #b7b7b7;
+    border: 1px solid @btn-bord;
     position: absolute;
     right: 0px;
     background-color: white;
@@ -186,7 +186,7 @@
 }
 
 .Networking-dropdownPanelTitle{
-    color: #707070;
+    color: @default-stdout-txt;
     padding-left:15px;
     min-height: 30px;
     font-size: 14px;
@@ -196,7 +196,7 @@
 }
 
 .Networking-jumpToPanelOption{
-    color: #707070;
+    color: @default-stdout-txt;
     padding-left:15px;
     min-height: 30px;
     font-size: 12px;
@@ -206,7 +206,7 @@
 }
 
 .Networking-jumpToPanelOption:hover{
-    background-color: #f2f2f2;
+    background-color: @btn-bg-hov;
 }
 
 .Networking-jumpToContainer,
@@ -218,7 +218,7 @@
 .Networking-keyDropDownPanel{
     width: 180px;
     padding: 10px 0px 10px 0px;
-    border: 1px solid #b7b7b7;
+    border: 1px solid @btn-bord;
     background-color: white;
     position: absolute;
     right:0px;
@@ -226,7 +226,7 @@
 }
 
 .Networking-keyPanelOption{
-    color: #707070;
+    color: @default-stdout-txt;
     padding-left:15px;
     min-height: 30px;
     font-size: 12px;
@@ -235,7 +235,7 @@
 }
 
 .Networking-keySymbol{
-    background-color: #848992;
+    background-color: @default-icon;
     color: white;
     border-radius: 50%;
     width: 20px;
@@ -249,5 +249,5 @@
 .Networking-keySymbolLabel{
     font-size: 12px;
     padding-left: 15px;
-    color: #707070
+    color: @default-stdout-txt
 }
