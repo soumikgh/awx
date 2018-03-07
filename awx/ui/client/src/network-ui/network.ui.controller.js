@@ -807,24 +807,6 @@ var NetworkUIController = function($scope,
         $scope.animations.push(pan_animation);
     };
 
-    $scope.$on('awxNet-jumpTo', function(e, zoomLevel) {
-        var v_center = $scope.to_virtual_coordinates($scope.graph.width/2, $scope.graph.height/2);
-        switch (zoomLevel){
-            case 'site':
-                $scope.jump_to_animation(v_center.x, v_center.y, 0.051);
-                break;
-            case 'rack':
-                $scope.jump_to_animation(v_center.x, v_center.y, 0.11);
-                break;
-            case 'inventory':
-                $scope.jump_to_animation(v_center.x, v_center.y, 0.51);
-                break;
-            case 'process':
-                $scope.jump_to_animation(v_center.x, v_center.y, 5.1);
-                break;
-        }
-    });
-
     $scope.$on('awxNet-zoom', (e, zoomPercent) => {
         let v_center = $scope.to_virtual_coordinates($scope.graph.width/2, $scope.graph.height/2);
         let scale = Math.pow(10, (zoomPercent - 120) / 40);

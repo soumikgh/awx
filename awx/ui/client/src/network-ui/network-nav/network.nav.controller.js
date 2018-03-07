@@ -12,7 +12,6 @@ function NetworkingController (models, $state, $scope, strings) {
 
     vm.rightPanelIsExpanded = false;
     vm.leftPanelIsExpanded = true;
-    vm.jumpToPanelExpanded = false;
     vm.keyPanelExpanded = false;
     vm.groups = [];
     $scope.devices = [];
@@ -24,20 +23,8 @@ function NetworkingController (models, $state, $scope, strings) {
         $scope.$broadcast('awxNet-toolbarButtonEvent', string);
     };
 
-    vm.jumpTo = (thing) => {
-        vm.jumpToPanelExpanded = !vm.jumpToPanelExpanded;
-        vm.keyPanelExpanded = false;
-        if (thing && typeof thing === 'string') {
-            $scope.$broadcast('awxNet-jumpTo', thing);
-        }
-        if (thing && typeof thing === 'object') {
-            $scope.$broadcast('awxNet-search', thing);
-        }
-    };
-
     vm.key = () => {
         vm.keyPanelExpanded = !vm.keyPanelExpanded;
-        vm.jumpToPanelExpanded = false;
     };
 
     $scope.$on('awxNet-overall_toolbox_collapsed', () => {
