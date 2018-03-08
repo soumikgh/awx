@@ -727,22 +727,10 @@ var NetworkUIController = function($scope,
         }
     };
 
-    // Button Event Handlers
-    $scope.onToggleToolboxButtonLeft = function () {
+    $scope.$on('awxNet-hideToolbox', (e, bool) => {
         $scope.first_channel.send("ToggleToolbox", {});
-        $scope.action_icons[0].fsm.handle_message("Disable", {});
-        $scope.action_icons[1].fsm.handle_message("Enable", {});
         $scope.overall_toolbox_collapsed = !$scope.overall_toolbox_collapsed;
-        $scope.$emit('awxNet-overall_toolbox_collapsed');
-    };
-
-    $scope.onToggleToolboxButtonRight = function () {
-        $scope.first_channel.send("ToggleToolbox", {});
-        $scope.action_icons[0].fsm.handle_message("Enable", {});
-        $scope.action_icons[1].fsm.handle_message("Disable", {});
-        $scope.overall_toolbox_collapsed = !$scope.overall_toolbox_collapsed;
-        $scope.$emit('awxNet-overall_toolbox_collapsed');
-    };
+    });
 
     $scope.$on('awxNet-toolbarButtonEvent', function(e, functionName){
         $scope[`on${functionName}Button`]();
@@ -868,13 +856,6 @@ var NetworkUIController = function($scope,
         new models.ContextMenu('HOST', 210, 200, 160, 90, $scope.contextMenuCallback, false, $scope.context_menu_buttons, $scope)
     ];
 
-    // Icons
-    var actionIconVerticalOffset = toolboxTopMargin + (toolboxHeight/2);
-    $scope.action_icons = [
-        new models.ActionIcon("chevron-left", 170, actionIconVerticalOffset, 16, $scope.onToggleToolboxButtonLeft, true, $scope),
-        new models.ActionIcon("chevron-right", 15, actionIconVerticalOffset, 16, $scope.onToggleToolboxButtonRight, false, $scope)
-    ];
-
     $scope.onDownloadTraceButton = function () {
         window.open("/network_ui_test/download_trace?topology_id=" + $scope.topology_id + "&trace_id=" + $scope.trace_id + "&client_id=" + $scope.test_client_id);
     };
@@ -896,7 +877,6 @@ var NetworkUIController = function($scope,
 
     $scope.all_buttons = [];
     $scope.all_buttons.extend($scope.context_menu_buttons);
-    $scope.all_buttons.extend($scope.action_icons);
 
     $scope.getDevice = function(name) {
 
@@ -1461,11 +1441,6 @@ var NetworkUIController = function($scope,
             $scope[toolbox].y = toolboxTopMargin;
             $scope[toolbox].height = toolboxHeight;
             $scope[toolbox].title_coordinates.y = toolboxTitleMargin;
-        });
-
-        $scope.action_icons.forEach((icon) => {
-            actionIconVerticalOffset = toolboxTopMargin + (toolboxHeight/2);
-            icon.y = actionIconVerticalOffset;
         });
 
         $('.Networking-detailPanel').height(toolboxHeight);

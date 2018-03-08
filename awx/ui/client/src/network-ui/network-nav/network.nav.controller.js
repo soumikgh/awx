@@ -19,17 +19,14 @@ function NetworkingController (models, $state, $scope, strings) {
         $state.go('inventories');
     };
 
-    vm.redirectButtonHandler = (string) => {
-        $scope.$broadcast('awxNet-toolbarButtonEvent', string);
-    };
-
     vm.key = () => {
         vm.keyPanelExpanded = !vm.keyPanelExpanded;
     };
 
-    $scope.$on('awxNet-overall_toolbox_collapsed', () => {
+    vm.hideToolbox = () => {
         vm.leftPanelIsExpanded = !vm.leftPanelIsExpanded;
-    });
+        $scope.$broadcast('awxNet-hideToolbox', vm.leftPanelIsExpanded);
+    };
 
     $scope.$on('awxNet-instatiateSelect', (e, devices) => {
         for(var i = 0; i < devices.length; i++){
@@ -44,9 +41,15 @@ function NetworkingController (models, $state, $scope, strings) {
         }
 
         $("#networking-search").select2({
-            width:'100%',
+            width:'400px',
             containerCssClass: 'Form-dropDown',
             placeholder: 'SEARCH'
+        });
+        $("#networking-actionsDropdown").select2({
+            width:'400px',
+            containerCssClass: 'Form-dropDown',
+            minimumResultsForSearch: -1,
+            placeholder: 'ACTIONS'
         });
     });
 
@@ -76,6 +79,16 @@ function NetworkingController (models, $state, $scope, strings) {
         }
     });
 
+    //Handlers for actions drop down
+    $('#networking-actionsDropdown').on('select2:select', (e) => {
+        $scope.$broadcast('awxNet-toolbarButtonEvent', e.params.data.title);
+    });
+
+    $('#networking-actionsDropdown').on('select2:open', () => {
+        $('.select2-dropdown').addClass('Networking-dropDown');
+    });
+
+    // Handlers for search dropdown
     $('#networking-search').on('select2:select', () => {
         $scope.$broadcast('awxNet-search', $scope.device);
     });

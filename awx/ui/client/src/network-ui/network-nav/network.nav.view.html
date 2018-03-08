@@ -12,17 +12,21 @@
         </div>
         <div class="Networking-toolbar">
             <div class="Networking-toolbarLeftSide">
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('Record')">RECORD</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('Export')">EXPORT</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('Layout')">LAYOUT</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('ExportYaml')">EXPORT YAML</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('DownloadTrace')">DOWNLOAD TRACE</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('DownloadRecording')">DOWNLOAD RECORDING</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('UploadTest')">UPLOAD TEST</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('RunTests')">RUN TESTS</button>
-                <button class="Networking-toolbarButton" ng-click="vm.redirectButtonHandler('CompileVariables')">COMPILE VARIABLES</button>
+                <div class="Networking-actionsDropDownContainer">
+                    <select id="networking-actionsDropdown"
+                        style="width:400px">
+                            <option></option>
+                            <option value="Export" title="Export">Export SVG</option>
+                            <option value="ExportYaml" title="ExportYaml">Export YAML</option>
+                    </select>
+                </div>
             </div>
             <div class="Networking-toolbarRightSide">
+                <div class="">
+                    <button ng-click="vm.hideToolbox()" type="button" class="Networking-toolbarIcon" ng-class="{'Networking-toolbarIcon--selected Networking-toolboxPanelToolbarIcon--selected' : vm.leftPanelIsExpanded}">
+                        <i class="fa fa-wrench"></i>
+                    </button>
+                </div>
                 <div class="Networking-keyContainer">
                     <button ng-click="vm.key()" type="button" class="Networking-toolbarIcon" ng-class="{'Networking-toolbarIcon--selected' : vm.keyPanelExpanded}">
                         <i class="fa fa-key"></i>
@@ -57,7 +61,7 @@
                     <select id="networking-search"
                         ng-model="device"
                         ng-options="device.label group by device.type | capitalize for device in devices | orderBy:'label' "
-                        style="width:100%">
+                        style="width:400px">
                             <option></option>
                     </select>
                 </div>
