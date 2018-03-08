@@ -727,7 +727,7 @@ var NetworkUIController = function($scope,
         }
     };
 
-    $scope.$on('awxNet-hideToolbox', (e, bool) => {
+    $scope.$on('awxNet-hideToolbox', () => {
         $scope.first_channel.send("ToggleToolbox", {});
         $scope.overall_toolbox_collapsed = !$scope.overall_toolbox_collapsed;
     });
