@@ -198,9 +198,10 @@ class JobNotificationMixin(object):
 
     def _build_notification_message(self, status_str):
         notification_body = self.notification_data()
-        notification_subject = u"{} #{} '{}' {}: {}".format(self.get_notification_friendly_name(),
+        notification_subject = u"{} #{} '{}' initiated by {} {}: {}".format(self.get_notification_friendly_name(),
                                                             self.id,
                                                             self.name,
+                                                            notification_body['created_by'],
                                                             status_str,
                                                             notification_body['url'])
         notification_body['friendly_name'] = self.get_notification_friendly_name()
